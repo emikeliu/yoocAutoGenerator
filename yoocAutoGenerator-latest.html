@@ -1,0 +1,84 @@
+<html>
+<meta charset="UTF-8" />
+
+<head>
+	<title>优课试题生成器</title>
+	<script>
+		var GLOBAL_GENERATEDTITLE = false;
+
+		function save(content, fileName) {
+
+			var data = new Blob([content], {
+				type: "text/plain"
+			});
+			var downloadUrl = window.URL.createObjectURL(data);
+			var anchor = document.createElement("a");
+			anchor.href = downloadUrl;
+			anchor.download = fileName;
+			anchor.click();
+			window.URL.revokeObjectURL(data);
+		}
+
+		function generateProblem() {
+			if (!GLOBAL_GENERATEDTITLE) {
+				alert("请先添加标题");
+				return;
+			}
+			var correctNumber = 0;
+			var correct = [];
+			const charSet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "K", "L", "M", "N"];
+			for (var i = 0; i <= 3; i++) {
+				if (document.getElementById("answer-" + charSet[i]).checked) {
+					correct.push("x");
+					correctNumber++;
+				} else correct.push("");
+			}
+			if (correctNumber == 0) {
+				alert("至少要有一个选项是正确的。");
+				return;
+			}
+			console.log(text.value);
+			var x = (text.value.replace(/[ABCD](\s*?)?([、\.]*?(\s*?))?/g, "$")).split("$");
+			console.log(x)
+			generated.innerHTML += "+" + document.getElementById("score").value + "\n" + x[0].trim() + "\n";
+			for (var i = 1; i < x.length; i++) {
+				if (correctNumber >= 2) {
+					generated.innerHTML += "[" + correct[i - 1] + "]" + x[i].trim() + "\n";
+				} else {
+					generated.innerHTML += "(" + correct[i - 1] + ")" + x[i].trim() + "\n";
+				}
+			}
+		}
+
+		function generateTitle() {
+			GLOBAL_GENERATEDTITLE = true;
+			generated.innerHTML += "\n# " + document.getElementById("title").value + "\n";
+		}
+	</script>
+</head>
+
+<body>
+	<form>
+		<label for="score">请输入分值：</label>
+		<input type="input" id="score" name="score"></textarea>
+		<br>
+		<label for="text">请复制题目：</label>
+		<textarea id="text"></textarea>
+		<br>
+		<span>请选择答案：</span>
+		<input type="checkbox" id="answer-A" name="answer"></input><label for="answer-A">A</label>
+		<input type="checkbox" id="answer-B" name="answer"></input><label for="answer-B">B</label>
+		<input type="checkbox" id="answer-C" name="answer"></input><label for="answer-C">C</label>
+		<input type="checkbox" id="answer-D" name="answer"></input><label for="answer-D">D</label>
+		<br>
+	</form>
+	<button onclick="generateProblem()">生成</button>
+	<br>
+	<label for="title">新标题：</label>
+	<textarea id="title"></textarea>
+	<button onclick="generateTitle()">添加</button>
+	<pre id="generated"></pre>
+	<button onclick="save(document.getElementById('generated').innerHTML,'yoocProblemsSet.txt')">保存</button>
+</body>
+
+</html>
