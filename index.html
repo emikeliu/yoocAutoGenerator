@@ -1,0 +1,33 @@
+<html>
+<meta charset="UTF-8" />
+
+<head>
+	<title>优课试题生成器</title>
+	<script src="index.js"></script>
+</head>
+
+<body>
+	<form>
+		<label for="score">请输入分值：</label>
+		<input type="input" id="score" name="score"></textarea>
+		<br>
+		<label for="text">请复制题目：</label>
+		<textarea id="text"></textarea>
+		<br>
+		<span>请选择答案：</span>
+		<input type="checkbox" id="answer-A" name="answer"></input><label for="answer-A">A</label>
+		<input type="checkbox" id="answer-B" name="answer"></input><label for="answer-B">B</label>
+		<input type="checkbox" id="answer-C" name="answer"></input><label for="answer-C">C</label>
+		<input type="checkbox" id="answer-D" name="answer"></input><label for="answer-D">D</label>
+		<br>
+	</form>
+	<button onclick="generateProblem()">生成</button>
+	<br>
+	<label for="title">新标题：</label>
+	<textarea id="title"></textarea>
+	<button onclick="generateTitle()">添加</button>
+	<pre id="generated"></pre>
+	<button onclick="save(document.getElementById('generated').innerHTML,'yoocProblemsSet.txt')">保存</button>
+</body>
+
+</html>
