@@ -4,30 +4,62 @@
 <head>
 	<title>优课试题生成器</title>
 	<script src="index.js"></script>
+	<style>
+		body {
+			font-size: 2em;
+		}
+		
+		button {
+			font-size: 1.5em;
+		}
+		
+		textarea {
+			font-size: 1.1em;
+			line-height: 1.1em;
+		}
+		
+		input {
+			font-size: 1.1em;
+			line-height: 1.1em;
+		}
+		
+		.answer {
+			height: 1.1em;
+			width: 1.1em;
+		}
+	</style>
 </head>
 
 <body>
 	<form>
 		<label for="score">请输入分值：</label>
-		<input type="input" id="score" name="score"></textarea>
+		<input type="input" id="score" name="score" class="input-single"></textarea>
 		<br>
 		<label for="text">请复制题目：</label>
-		<textarea id="text"></textarea>
+		<textarea id="text" class="input-complex" name="text"></textarea>
+		<br>
+		<label for="count">请选择选项个数：</label>
+		<input type="text" id="count" name="count" value="4" onchange="countOnChange();countCheckValue()" onkeyup="countOnChange();" />
 		<br>
 		<span>请选择答案：</span>
-		<input type="checkbox" id="answer-A" name="answer"></input><label for="answer-A">A</label>
-		<input type="checkbox" id="answer-B" name="answer"></input><label for="answer-B">B</label>
-		<input type="checkbox" id="answer-C" name="answer"></input><label for="answer-C">C</label>
-		<input type="checkbox" id="answer-D" name="answer"></input><label for="answer-D">D</label>
+		<div id="answers">
+		</div>
+
 		<br>
 	</form>
-	<button onclick="generateProblem()">生成</button>
+	<button onclick="generateOnClick()">生成</button>
 	<br>
 	<label for="title">新标题：</label>
-	<textarea id="title"></textarea>
+	<input name="title" id="title"></textarea>
 	<button onclick="generateTitle()">添加</button>
+	<br>
+	<span>实时预览：</span>
+	<br>
 	<pre id="generated"></pre>
 	<button onclick="save(document.getElementById('generated').innerHTML,'yoocProblemsSet.txt')">保存</button>
+	<script type="text/javascript">
+		countOnChange()
+	</script>
 </body>
 
 </html>
